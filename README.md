@@ -1,4 +1,4 @@
-# Forge
+# Forge - Pinelabs || CaseStudy || PS-03
 
 Forge takes a product requirement and a Python repository and produces a reviewed, tested code change.
 Seven AI agents do the work: analyst, architect, developer, QA, security, reviewer and release. A plain
