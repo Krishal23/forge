@@ -5,9 +5,8 @@ Seven AI agents do the work: analyst, architect, developer, QA, security, review
 Python program (the orchestrator) runs them in order, checks everything they return, limits how often
 they can retry, and stops for a person to approve the merge and the deploy.
 
-It was built for the Pine Labs case study round, problem "Autonomous Enterprise Engineering Organisation".
-
-New machine? Read [RUN_ME.md](RUN_ME.md), then run `./start.sh`.
+Built for the Pine Labs case study round, problem statement 03 :"Autonomous Enterprise Engineering Organisation".
+Read [RUN_ME.md](RUN_ME.md), then run `./start.sh`.
 
 ```
 requirement → analyst → [criteria gate] → architect → developer → QA + tests → lint → security
