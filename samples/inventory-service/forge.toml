@@ -1,0 +1,11 @@
+[project]
+name = "inventory-service"
+language = "python"
+test_command = ["python", "-m", "pytest", "-q", "-p", "no:cacheprovider"]
+source_dirs = ["inventory", "api"]
+test_dirs = ["tests"]
+
+[policy]
+protected_paths = ["forge.toml", ".github/**", "**/*.lock", ".env*", "Dockerfile"]
+high_risk_paths = ["inventory/snapshot.py"]
+coverage_threshold = 80

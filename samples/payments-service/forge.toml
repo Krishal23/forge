@@ -1,0 +1,14 @@
+# Forge target configuration. Every key is optional; Forge auto-detects defaults.
+[project]
+name = "payments-service"
+language = "python"
+test_command = ["python", "-m", "pytest", "-q", "-p", "no:cacheprovider"]
+source_dirs = ["payments", "refunds", "api", "notifications"]
+test_dirs = ["tests"]
+
+[policy]
+# Agents may never edit these, whatever the architect's scope says.
+protected_paths = ["forge.toml", ".github/**", "**/*.lock", ".env*", "Dockerfile"]
+# Changes touching these need a second approver at the merge gate.
+high_risk_paths = ["payments/auth.py", "payments/db.py"]
+coverage_threshold = 80

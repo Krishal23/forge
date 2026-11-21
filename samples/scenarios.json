@@ -1,0 +1,26 @@
+[
+  {
+    "id": "REQ-PAY-001",
+    "target": "payments-service",
+    "title": "Partial refunds with idempotency",
+    "scripted": true,
+    "requirement": "Merchants need to issue partial refunds on captured payments.\n\n- Extend refunds.service.issue_refund to accept an optional amount (minor units) and an optional idempotency_key. When amount is omitted, refund the full remaining amount.\n- The total of all refunds for a payment must never exceed the captured amount. Non-positive amounts are rejected.\n- Retrying a request with the same idempotency_key for the same payment must return the original refund and must not create a second one.\n- Payment status becomes partially_refunded after a partial refund and refunded once the full amount has been refunded.\n- The refund API handler must accept optional amount and idempotency_key fields.\n- Existing behaviour (ownership check, captured-only refunds) must be preserved.",
+    "hidden_tests": "eval/hidden/REQ-PAY-001"
+  },
+  {
+    "id": "REQ-INV-001",
+    "target": "inventory-service",
+    "title": "Reservation expiry (TTL)",
+    "scripted": true,
+    "requirement": "Abandoned checkouts hold stock forever. Reservations must expire.\n\n- Each store has a configurable reservation TTL in seconds, default 900 (15 minutes), set via InventoryStore(ttl_seconds=...).\n- A reservation is expired when now - created_at >= ttl_seconds.\n- inventory.catalog.available(store, sku, now=None) must ignore expired reservations when now is given; without now it behaves as today.\n- inventory.reservations.commit(store, reservation_id, now=None) must raise ReservationError for an expired reservation when now is given.\n- reserve() must ignore expired reservations when checking stock (it already receives now).\n- Add inventory.reservations.expire_stale(store, now) that removes expired reservations and returns how many were removed.",
+    "hidden_tests": "eval/hidden/REQ-INV-001"
+  },
+  {
+    "id": "REQ-PAY-002",
+    "target": "payments-service",
+    "title": "Refund listing endpoint (live mode only)",
+    "scripted": false,
+    "requirement": "Add an API handler handle_list_refunds(conn, request) in api/handlers.py that returns all refunds for a payment as {\"status\": 200, \"body\": {\"refunds\": [{\"refund_id\", \"amount\", \"created_at\"}], \"total_refunded\": int}}. Only the merchant that owns the payment may list its refunds (403 otherwise). Unknown payments return 404.",
+    "hidden_tests": null
+  }
+]

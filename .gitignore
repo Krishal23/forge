@@ -1,0 +1,14 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.coverage
+.env
+.forge/
+web/node_modules/
+demo/
+docs/
+report/
+CHECKPOINT.md
+
